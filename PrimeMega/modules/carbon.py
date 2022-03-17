@@ -22,26 +22,3 @@ async def carbon_func(_, message):
     await pbot.send_photo(message.chat.id, carbon)
     await m.delete()
     carbon.close()
-
-
-@pbot.on_message(filters.command("repo"))
-async def repo(_, message):
-    await message.reply_text(
-        f"""✨ **Hey I'm Prime Mega** 
-**Owner repo : [『TØNIC』](https://t.me/Bukan_guudlooking)**
-**Python Version :** `{y()}`
-**Library Version :** `{o}`
-**Telethon Version :** `{s}`
-**Pyrogram Version :** `{z}`
-**Create your own with click button bellow.**
-""",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("Repo", url="https://github.com/Tonic990/PrimeMega"), 
-                    InlineKeyboardButton("Support", url="https://t.me/PrimeSupportGroup")
-                ]
-            ]
-        ),
-        disable_web_page_preview=True
-    )
