@@ -30,36 +30,6 @@ useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) 
 opener.addheaders = [("User-agent", useragent)]
 
 
-@register(pattern="^/google (.*)")
-async def _(event):
-    if event.fwd_from:
-        return
-
-    webevent = await event.reply("searching........")
-    match = event.pattern_match.group(1)
-    page = re.findall(r"page=\d+", match)
-    try:
-        page = page[0]
-        page = page.replace("page=", "")
-        match = match.replace("page=" + page[0], "")
-    except IndexError:
-        page = 1
-    search_args = (str(match), int(page))
-    gsearch = GoogleSearch()
-    gresults = await gsearch.async_search(*search_args)
-    msg = ""
-    for i in range(len(gresults["links"])):
-        try:
-            title = gresults["titles"][i]
-            link = gresults["links"][i]
-            desc = gresults["descriptions"][i]
-            msg += f"❍[{title}]({link})\n**{desc}**\n\n"
-        except IndexError:
-            break
-    await webevent.edit(
-        "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg, link_preview=False
-    )
-
 
 @register(pattern="^/image (.*)")
 async def img_sampler(event):
@@ -279,14 +249,9 @@ async def apk(e):
 __mod_name__ = "Search"
 
 __help__ = """
-❂ /google <query>*:* Perform a google search
 ❂ /image <query>*:* Search Google for images and returns them\nFor greater no. of results specify lim, For eg: `/img hello lim=10`
 ❂ /app <appname>*:* Searches for an app in Play Store and returns its details.
-❂ /reverse: Does a reverse image search of the media which it was replied to.
+❂ /reverse or /grs: Does a reverse image search of the media which it was replied to.
 ❂ /gps <location>*:* Get gps location.
-❂ /github <username>*:* Get information about a GitHub user.
 ❂ /country <country name>*:* Gathering info about given country
-❂ /imdb <Movie name>*:* Get full info about a movie with imdb.com
-❂ Prime <query>*:* Prime answers the query
-  💡Ex: `Prime where is Japan?`
 """
