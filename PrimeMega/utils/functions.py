@@ -91,14 +91,6 @@ async def get_http_status_code(url: str) -> int:
         return resp.status
 
 
-async def make_carbon(code):
-    url = "https://carbonara.vercel.app/api/cook"
-    async with aiosession.post(url, json={"code": code}) as resp:
-        image = BytesIO(await resp.read())
-    image.name = "carbon.png"
-    return image
-
-
 async def transfer_sh(file_or_message):
     if isinstance(file_or_message, Message):
         file_or_message = await file_or_message.download()
